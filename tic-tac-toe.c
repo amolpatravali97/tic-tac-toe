@@ -37,12 +37,15 @@ void main()
       game_over = 1;
   }
 
+  system("clear");
+  printLayout(positions);
+
   if (!winner)
   {
-    printf("\nIts a draw");
+    printf("Its a draw\n");
     return;
   }
-  printf("\nPlayer %d is the winner. Congrats", winner);
+  printf("Player %d is the winner. Congrats\n", winner);
 }
 
 int inputPosition(char *positions, int player1_turn)
@@ -76,38 +79,25 @@ void printLayout(char *positions)
 int whoWonTheGame(char *positions)
 {
   int winner = 0;
-  
-  if (positions[0] == positions[1] && positions[1] == positions[2])
+  int win_patterns[8][3] = {
+      {0, 1, 2},
+      {3, 4, 5},
+      {6, 7, 8},
+      {0, 3, 6},
+      {1, 4, 7},
+      {2, 5, 8},
+      {0, 4, 8},
+      {2, 4, 6}};
+  int i;
+
+  for (i = 0; i < 8; i++)
   {
-    winner = (positions[0] == 'x') ? 1 : 2;
+    if (positions[win_patterns[i][0]] == positions[win_patterns[i][1]] && positions[win_patterns[i][1]] == positions[win_patterns[i][2]])
+    {
+      winner = (positions[win_patterns[i][0]] == 'x') ? 1 : 2;
+      break;
+    }
   }
-  else if (positions[3] == positions[4] && positions[4] == positions[5])
-  {
-    winner = (positions[3] == 'x') ? 1 : 2;
-  }
-  else if (positions[6] == positions[7] && positions[7] == positions[8])
-  {
-    winner = (positions[6] == 'x') ? 1 : 2;
-  }
-  else if (positions[0] == positions[3] && positions[3] == positions[6])
-  {
-    winner = (positions[0] == 'x') ? 1 : 2;
-  }
-  else if (positions[1] == positions[4] && positions[4] == positions[7])
-  {
-    winner = (positions[1] == 'x') ? 1 : 2;
-  }
-  else if (positions[2] == positions[5] && positions[5] == positions[8])
-  {
-    winner = (positions[2] == 'x') ? 1 : 2;
-  }
-  else if (positions[0] == positions[4] && positions[4] == positions[8])
-  {
-    winner = (positions[0] == 'x') ? 1 : 2;
-  }
-  else if (positions[2] == positions[4] && positions[4] == positions[6])
-  {
-    winner = (positions[2] == 'x') ? 1 : 2;
-  }
+
   return winner;
 }
